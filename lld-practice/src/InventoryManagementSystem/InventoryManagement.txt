@@ -1,0 +1,101 @@
+"Design an inventory management system that tracks products across multiple warehouses. The system needs to handle adding and removing inventory, transferring stock between locations, and alerting when inventory runs low."
+
+
+Requirements:
+1. Track inventory for products across multiple warehouses
+2. Add stock to a specific warehouse (receiving shipments)
+3. Remove stock from a specific warehouse (fulfilling orders)
+4. Check availability: given a product and quantity, return which warehouses can fulfill it
+5. Transfer stock between warehouses
+6. Low-stock alerts
+7. Reject operations that would result in negative inventory
+8. System must be thread-safe to handle concurrent operations
+
+Out of Scope:
+- Product catalog management (products exist externally)
+- Order processing / payment / serviceability
+- Persistence
+
+
+inventory - will have product id, name, stock, add remove stock from inventory, have to notify once low, list<threshold, AlertEnum>
+
+warehouse - Map<productId, Inventory>, location, availability, addProduct, removeProduct, getSock
+
+inventoryManager - Map<String, Warehouse> , transferInventory(warehouse A, warehouse B)
+
+AlertEnum - Email, WebHook, Console
+
+AlertListener - interface onLowStock
+
+import java.util.List;
+import java.util.Map;
+
+// ==========================================
+// 1. ALERT SYSTEM
+// ==========================================
+enum AlertEnum {
+    EMAIL, WEBHOOK, CONSOLE
+}
+
+interface AlertListener {
+    void onLowStock(String warehouseId, String productId, int remainingStock);
+}
+
+class AlertFactory {
+    public static AlertListener getListener(AlertEnum type) { return null; }
+}
+class AlertRule {
+    int threshold;
+    AlertListener listener;
+    boolean hasTriggered;
+
+    public AlertRule(int threshold, AlertEnum alertType) {}
+}
+
+// ==========================================
+// 2. CORE ENTITIES
+// ==========================================
+class Inventory {
+    String productId;
+    String name;
+    int stock;
+    List<AlertRule> alertRules;
+
+    public Inventory(String productId, String name, int initialStock, List<AlertRule> alertRules) {}
+
+    public void addStock(int qty) {}
+    public void removeStock(String warehouseId, int qty) {}
+    public int getStock() { return 0; }
+
+    private void checkAlerts(String warehouseId) {}
+    private void resetAlertsIfRecovered() {}
+}
+
+class Warehouse {
+    String warehouseId;
+    String location;
+    Map<String, Inventory> productInventoryMap;
+
+    public Warehouse(String warehouseId, String location) {}
+
+    public void addProduct(String productId, String name, int initialStock, List<AlertRule> rules) {}
+    public void addStock(String productId, int qty) {}
+    public void removeStock(String productId, int qty) {}
+    public boolean hasAvailableStock(String productId, int qty) { return false; }
+    public Inventory getInventory(String productId) { return null; }
+}
+
+// ==========================================
+// 3. ORCHESTRATOR
+// ==========================================
+class InventoryManager {
+    Map<String, Warehouse> warehouseMap;
+
+    public void addWarehouse(Warehouse warehouse) {}
+
+    // Returns a list of Warehouse IDs that can fulfill the quantity
+    public List<String> checkAvailability(String productId, int qty) { return null; }
+
+    public void transferInventory(String fromWarehouseId, String toWarehouseId, String productId, int qty) {}
+}
+

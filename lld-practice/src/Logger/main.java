@@ -115,7 +115,7 @@ class AsyncAppender extends LogAppender {
         this.delegate = delegate;
         this.queue = new ArrayBlockingQueue<>(10000);
 
-        this.worker = new Thread(this::consumeLogs);
+        this.worker = new Thread(()->consumeLogs());
         this.worker.setName("Async-Log-Thread");
         this.worker.setDaemon(true);
         this.worker.start();
