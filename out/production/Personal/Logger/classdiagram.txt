@@ -1,0 +1,20 @@
+A logger is the in-process library an application uses to record what's happening at runtime. Code calls logger.info("user signed in") from anywhere in the app, and the library timestamps the message, attaches the severity level, and writes it to one or more places like the console, a file, or both. Think Log4j, SLF4J, or Python's logging module. We're designing the library that lives inside one application, not a distributed log aggregation service.
+
+
+
+log.info-1
+log.debug-2
+log.warn- 3
+log.error-4
+
+file, console, both
+
+
+logLevel - enum with sev
+
+logger - info, debug, warn, error
+
+logRecord - add timestamp,
+
+
+al

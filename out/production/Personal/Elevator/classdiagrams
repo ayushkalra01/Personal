@@ -1,0 +1,54 @@
+An elevator system manages multiple elevators serving different floors in a building. When someone requests an elevator, the system decides which one to dispatch. Once inside, passengers select their destination floors. The system needs to move elevators efficiently while handling multiple concurrent requests.
+
+Requirements -
+1. 3 elevators and 10 floors
+2. User will press up down button in the hall and from that system have to efficiently write algo to get the elevator for that usecase
+3. We can use step up and step down functions for elevator moments.
+4. paseenger can select multiple floow number inside the elevator, ps elevators movements should be optimised
+5. Invalid requests should be rejected
+
+Core Entities-
+
+Elevator - Actual machine thats gonna go up and down , have stop and floor to cover functionality in queue, currfloor info
+
+ElevatorController - Orchestrator for this, will be deciding which elevator to schedule, should have info about all the states of the elevator
+
+Floor -  should have up down buttons to call eleveator , floor number
+
+Request - floor number
+
+
+Class ElevatorController
+- elevators : [] Elevator
+
+requestElevator(floor, type)
+step()
+
+Class Elevator
+requests: Set<Request>
+currState : type //IDLE, UP, DOWN
+currFloor: INT
+
+addRequest(Request)
+step()
+
+
+Class Request
+floor: int
+type: requestType
+
+
+requestElevator(Floor,Type) {
+// get all currFloor and dir of all elevator
+ansElevator,
+minDist.
+for ele all elevator
+if(reqfloor < currFloor && dir is up)
+if(currFloor - reqFloor <minDist)
+ansElevator = ele;
+
+
+use blocking queue for adding pending requests
+
+
+}
